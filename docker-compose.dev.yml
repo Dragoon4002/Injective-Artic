@@ -1,0 +1,91 @@
+# Dev compose. Prod uses docker-compose.yml — leave untouched.
+# Launch with: docker compose -f docker-compose.dev.yml --env-file .env.dev up -d
+services:
+  hub-db:
+    image: postgres:16-alpine
+    ports:
+      - "15432:5432"  # host-side for `make migrate`
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - hub-pgdata-dev:/var/lib/postgresql/data
+    networks:
+      - artic-dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  hub:
+    build:
+      context: .
+      dockerfile: hub/Dockerfile
+    ports:
+      - "9000:8000"
+    env_file: .env.dev
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@hub-db:5432/${POSTGRES_DB}
+      # HUB_PORT: 9000
+    volumes:
+      # Tarballs are produced by scripts/build_images.sh after the hub image
+      # is built — mount them in at runtime so /internal/v1/images/* can
+      # serve them without a rebuild.
+      - ./hub/docker/images:/app/hub/docker/images:ro
+    depends_on:
+      hub-db:
+        condition: service_healthy
+    networks:
+      - artic-dev
+
+  user-server-db:
+    image: postgres:14-alpine
+    ports:
+      - "15433:5432"  # host-side for `make migrate`
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - us-pgdata-dev:/var/lib/postgresql/data
+    networks:
+      - artic-dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  user-server:
+    build:
+      context: .
+      dockerfile: user-server/Dockerfile
+    ports:
+      - "9100:8000"
+    env_file: .env.dev
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@user-server-db:5432/${POSTGRES_DB}
+      HUB_URL: http://hub:9000
+      HUB_SECRET: ${HUB_SECRET:-artic-dev-hub-secret}
+      INTERNAL_SECRET: ${INTERNAL_SECRET:-artic-dev-internal-secret}
+      AGENT_IMAGE: ${AGENT_IMAGE:-artic-app:dev}
+      AGENT_NETWORK: artic-dev
+      USER_SERVER_INTERNAL_URL: http://user-server:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # spawner needs host Docker
+    depends_on:
+      user-server-db:
+        condition: service_healthy
+    networks:
+      - artic-dev
+
+networks:
+  artic-dev:
+    name: artic-dev
+    driver: bridge
+
+volumes:
+  hub-pgdata-dev:
+  us-pgdata-dev:

@@ -1,0 +1,133 @@
+{
+  "address": "0xeeb56334152D6bDB62aacF56f8DbCceA5210b78D",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "sessionId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "symbol",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "side",
+          "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint128",
+          "name": "entryPrice",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint128",
+          "name": "exitPrice",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "int16",
+          "name": "pnlBps",
+          "type": "int16"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "detailHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "TradeLogged",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "sessionId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "symbol",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint8",
+          "name": "side",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint128",
+          "name": "entryPrice",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "exitPrice",
+          "type": "uint128"
+        },
+        {
+          "internalType": "int16",
+          "name": "pnlBps",
+          "type": "int16"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "detailHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "logTrade",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "tx_hash": "dddabb7cede281eb266522a5b7d5b8d32013c845aca8b26052d2325668613157",
+  "block_number": 33431627,
+  "chain_id": "16661",
+  "evm_chain_id": 16661,
+  "rpc_url": "https://evmrpc.0g.ai"
+}

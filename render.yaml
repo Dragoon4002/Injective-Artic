@@ -1,0 +1,98 @@
+# Render Blueprint — Artic hub + Postgres only.
+# User-server + agent containers run inside per-user Morph VMs (spawned by hub).
+# Connect repo on Render → "New Blueprint Instance" → pick this file.
+# Fill `sync: false` env vars in the Render dashboard after creation.
+
+databases:
+  - name: artic-hub-db
+    plan: free
+    databaseName: artic
+    user: artic
+
+services:
+  - type: web
+    name: artic-hub
+    runtime: docker
+    dockerfilePath: ./hub/Dockerfile
+    dockerContext: .
+    plan: starter   # free sleeps after 15min idle — kills VM wake flow
+    healthCheckPath: /health
+    autoDeploy: true
+    preDeployCommand: alembic -c hub/alembic.ini upgrade head
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: artic-hub-db
+          property: connectionString
+      - key: HUB_PUBLIC_URL
+        value: https://artic-hub.onrender.com
+      - key: CORS_ALLOW_ORIGINS
+        value: https://artic-trade.vercel.app
+
+      # Auth
+      - key: AUTH_SUPPORTED_CHAINS
+        value: "0g-mainnet"
+      - key: JWT_EXPIRY_MINUTES
+        value: "720"
+      - key: REFRESH_EXPIRY_DAYS
+        value: "90"
+      - key: AUTH_SESSION_TTL_SECONDS
+        value: "604800"
+
+      # 0G mainnet (used for on-chain logging from VMs)
+      - key: ZERO_G_RPC_URL
+        value: https://evmrpc.0g.ai
+      - key: ZERO_G_CHAIN_ID
+        value: "16661"
+      - key: ZERO_G_EXPLORER_BASE
+        value: https://chainscan.0g.ai
+      - key: ZERO_G_STORAGE_INDEXER_URL
+        value: https://indexer-storage-turbo.0g.ai
+      - key: DECISION_LOGGER_ADDRESS
+        value: "0x70a15Db526104abC2f021b7c690cd89a07EDE49C"
+      - key: TRADE_LOGGER_ADDRESS
+        value: "0xeeb56334152D6bDB62aacF56f8DbCceA5210b78D"
+      - key: INFT_CONTRACT_ADDRESS
+        value: "0x2A9caFEDFc91d55E00B6d1514E39BeB940832b5D"
+
+      # VM provisioning — Morph per-user
+      - key: VM_PROVIDER
+        value: morph
+      - key: MORPH_BASE_URL
+        value: https://cloud.morph.so
+      - key: VM_WAKE_TIMEOUT_SECONDS
+        value: "60"
+      - key: PROXY_CONNECT_TIMEOUT_SECONDS
+        value: "10"
+      - key: PROXY_READ_TIMEOUT_SECONDS
+        value: "30"
+
+      # 0G Compute (forwarded to spawned VMs via spawner env)
+      - key: LLM_PROVIDER
+        value: "0g_compute"
+      - key: LLM_MODEL
+        value: "0GM-1.0-35B-A3B"
+      - key: ZERO_G_COMPUTE_PROVIDER
+        value: "0x4870CbC4D07d6Ac2EE5aA865588e5985FE77a4E9"
+      - key: ZERO_G_COMPUTE_SERVICE_URL
+        value: https://compute-network-20.integratenetwork.work/v1/proxy
+      - key: ZERO_G_COMPUTE_SERVING_BROKER
+        value: "0x47340d900bdFec2BD393c626E12ea0656F938d84"
+
+      # Secrets — set in Render dashboard
+      - key: JWT_SECRET
+        sync: false
+      - key: KEK
+        sync: false
+      - key: INTERNAL_SECRET
+        sync: false
+      - key: ZERO_G_PRIVATE_KEY
+        sync: false
+      - key: TWELVE_DATA_API_KEY
+        sync: false
+      - key: MORPH_API_KEY
+        sync: false
+      - key: MORPH_GOLDEN_SNAPSHOT_ID
+        sync: false
+      - key: BASE_SNAPSHOT_ID
+        sync: false

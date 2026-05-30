@@ -1,0 +1,351 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-inter);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Artic — Option A: warm luminous. 3-tier elevation + saturated terracotta. */
+  --color-surface: #0E141A;
+  --color-surface-elevated: #171D25;
+  --color-surface-raised: #1F2731;
+  --color-surface-sunken: #0A0E12;
+
+  /* Primary accent — soft cream. Default for all primary surfaces + buttons. */
+  --color-accent-warm: #F3E4D1;
+  --color-accent-warm-hover: #E5D2B8;
+  --color-accent-warm-soft: rgba(243, 228, 209, 0.14);
+  --color-accent-warm-border: rgba(243, 228, 209, 0.38);
+
+  /* Secondary accent — demoted cream. Reserved for soft hints + subtle borders. */
+  --color-accent-cream: #F4D9C2;
+  --color-accent-cream-soft: rgba(244, 217, 194, 0.08);
+
+  /* Legacy aliases (kept so any remaining orange-* refs still resolve) */
+  --color-orange: #F3E4D1;
+  --color-orange-light: #F2B89A;
+  --color-orange-text: #F4D9C2;
+  --color-orange-hover: #E5D2B8;
+
+  /* Semantic signals — harmonized with warm palette */
+  --color-teal: #6FCAA0;
+  --color-teal-light: #8FDCB7;
+  --color-red: #E85F5F;
+  --color-red-light: #F07A6D;
+  --color-blue-accent: #8FB1E8;
+  --color-blue-light: #B3C9EE;
+  --color-amber: #F0C561;
+
+  /* Primary CTA */
+  --color-cta: #34424D;
+  --color-cta-light: #3D4C58;
+  --color-cta-hover: #1F262D;
+  --color-cta-border: #C4CCD3;
+
+  /* Neutral gray accent (replaces orange in docs/litepaper) */
+  --color-accent-gray: #C4CCD3;
+  --color-accent-gray-soft: #9AA4AE;
+
+  --animate-ticker: ticker 30s linear infinite;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Dark-only theme — Artic Option A */
+:root {
+  color-scheme: dark;
+  --background: #0E141A;
+  --foreground: #F2F0EB;
+  --foreground-muted: #8B94A1;
+  --card: #171D25;
+  --card-foreground: #F2F0EB;
+  --popover: #1F2731;
+  --popover-foreground: #F2F0EB;
+  --primary: #F3E4D1;
+  --primary-foreground: #0E141A;
+  --secondary: rgba(255, 255, 255, 0.05);
+  --secondary-foreground: #8B94A1;
+  --muted: rgba(255, 255, 255, 0.04);
+  --muted-foreground: rgba(139, 148, 161, 0.9);
+  --accent: rgba(243, 228, 209, 0.14);
+  --accent-foreground: #F3E4D1;
+  --destructive: #E85F5F;
+  --border: rgba(194, 203, 212, 0.06);
+  --input: rgba(194, 203, 212, 0.10);
+  --ring: rgba(243, 228, 209, 0.55);
+  --radius: 0.625rem;
+  --chart-1: #F3E4D1;
+  --chart-2: #6FCAA0;
+  --chart-3: #F07A6D;
+  --chart-4: #8FB1E8;
+  --chart-5: #F0C561;
+  --sidebar: #0E141A;
+  --sidebar-foreground: #F2F0EB;
+  --sidebar-primary: #F3E4D1;
+  --sidebar-primary-foreground: #0E141A;
+  --sidebar-accent: rgba(243, 228, 209, 0.14);
+  --sidebar-accent-foreground: #F3E4D1;
+  --sidebar-border: rgba(194, 203, 212, 0.06);
+  --sidebar-ring: rgba(243, 228, 209, 0.55);
+}
+
+/* Scoped light theme — applies only to landing page when toggled. Tokens
+   invert so existing semantic utilities (bg-background, text-foreground,
+   border-border, etc.) swap automatically. */
+.landing-light {
+  color-scheme: light;
+  --background: #F2F0EB;
+  --foreground: #0E141A;
+  --foreground-muted: #4A525E;
+  --card: #FFFFFF;
+  --card-foreground: #0E141A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0E141A;
+  --primary: #0E141A;
+  --primary-foreground: #F2F0EB;
+  --secondary: rgba(14, 20, 26, 0.05);
+  --secondary-foreground: #4A525E;
+  --muted: rgba(14, 20, 26, 0.04);
+  --muted-foreground: rgba(74, 82, 94, 0.9);
+  --accent: rgba(14, 20, 26, 0.08);
+  --accent-foreground: #0E141A;
+  --destructive: #E85F5F;
+  --border: rgba(14, 20, 26, 0.12);
+  --input: rgba(14, 20, 26, 0.15);
+  --ring: rgba(14, 20, 26, 0.4);
+
+  --color-surface: #F2F0EB;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-raised: #FAF8F3;
+  --color-surface-sunken: #E5E1D6;
+
+  --color-accent-warm: #0E141A;
+  --color-accent-warm-hover: #1F262D;
+  --color-accent-warm-soft: rgba(14, 20, 26, 0.06);
+  --color-accent-warm-border: rgba(14, 20, 26, 0.25);
+}
+
+/* Smooth hover lift — borderless surfaces rely on shadow change */
+.hover-lift {
+  transition:
+    transform 0.25s cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 18px 50px -22px rgba(0, 0, 0, 0.75);
+}
+
+/* ── Utility layer — elevation tiers replace generic borders ───────────── */
+
+/** Base dashboard surface (sits directly on page). Use for primary cards +
+ *  chart containers. No border — hierarchy comes from bg alone. */
+@utility surface {
+  background: var(--color-surface-elevated);
+  border-radius: 1rem;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset;
+}
+
+/** Raised surface — for cards that need to float above the base surface
+ *  (agent cards inside a section, popover, etc.). */
+@utility surface-raised {
+  background: var(--color-surface-raised);
+  border-radius: 1rem;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 8px 28px -14px rgba(0, 0, 0, 0.6);
+}
+
+/** Sunken well — charts, code blocks, log streams. Reads "below" the page. */
+@utility surface-sunken {
+  background: var(--color-surface-sunken);
+  border-radius: 1rem;
+}
+
+/** Accent surface — for primary CTAs, active nav, emphasis cards. */
+@utility surface-accent {
+  background: var(--color-accent-warm-soft);
+  border: 1px solid var(--color-accent-warm-border);
+  border-radius: 0.625rem;
+  color: var(--color-accent-warm);
+}
+
+/* ── Typography scale ──────────────────────────────────────────────────── */
+
+@utility h-page {
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+@utility h-section {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(242, 240, 235, 0.55);
+}
+@utility label-xs {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(242, 240, 235, 0.5);
+}
+
+@utility btn-disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+@utility num-tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Focus ring — 2px terracotta on any .focus-ring element */
+@utility focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ── Native controls ───────────────────────────────────────────────────── */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  height: 20px;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  background: rgba(194, 203, 212, 0.16);
+  border-radius: 999px;
+}
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  background: rgba(194, 203, 212, 0.16);
+  border-radius: 999px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--color-accent-warm);
+  border: 2px solid var(--color-surface);
+  margin-top: -5px;
+  box-shadow: 0 0 0 1px rgba(232, 162, 122, 0.5);
+  transition: box-shadow 0.15s ease;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--color-accent-warm);
+  border: 2px solid var(--color-surface);
+  box-shadow: 0 0 0 1px rgba(232, 162, 122, 0.5);
+  transition: box-shadow 0.15s ease;
+}
+input[type="range"]:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgba(232, 162, 122, 0.28);
+}
+input[type="range"]:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 4px rgba(232, 162, 122, 0.28);
+}
+
+/* Respect reduced motion globally */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-surface text-foreground;
+    /* Faint radial warmth seeping down from the top — adds depth without
+       competing with content. Pairs with the terracotta accent. */
+    background-image:
+      radial-gradient(ellipse 1200px 600px at 50% -200px, rgba(232, 162, 122, 0.05), transparent 60%),
+      radial-gradient(ellipse 800px 400px at 100% 0%, rgba(143, 177, 232, 0.03), transparent 50%);
+    background-attachment: fixed;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+    scrollbar-gutter: stable;
+  }
+  option {
+    background-color: #1F2731;
+    color: #F2F0EB;
+  }
+  select:focus {
+    outline: none;
+  }
+  ::selection {
+    background: rgba(232, 162, 122, 0.3);
+    color: #F2F0EB;
+  }
+}

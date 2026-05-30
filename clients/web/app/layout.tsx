@@ -1,0 +1,73 @@
+import type { Metadata } from "next";
+import { Inter, Geist_Mono } from "next/font/google";
+import { Web3Providers } from "@/components/providers/web3-providers";
+import { LoadingScreen } from "@/components/shared/loading-screen";
+import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Artic — AI-Powered Multi-Agent Trading",
+  description:
+    "Deploy AI trading agents on any market at any scale. Artic is the orchestration hub for AI-powered trading with 30+ quant strategies.",
+  icons: {
+    icon: [
+      { url: "/artic-logo.png", type: "image/png" },
+      { url: "/artic-logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/artic-logo.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/artic-logo.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/artic-logo.png",
+  },
+  keywords: [
+    "AI trading",
+    "quantitative trading",
+    "algorithmic trading",
+    "multi-agent systems",
+    "crypto trading",
+    "stock trading",
+    "forex trading",
+    "trading bots",
+  ],
+  authors: [{ name: "Silonelabs" }],
+  openGraph: {
+    title: "Artic — AI-Powered Multi-Agent Trading",
+    description:
+      "Deploy AI trading agents on any market at any scale. Artic is the orchestration hub for AI-powered trading with 30+ quant strategies.",
+    images: [
+      {
+        url: "/artic-logo.png",
+        width: 800,
+        height: 600,
+        alt: "Artic Logo",
+      },
+    ],
+    siteName: "Artic",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${inter.variable} ${geistMono.variable} dark antialiased`}
+    >
+      <body className="min-h-screen flex flex-col">
+        <LoadingScreen />
+        <Web3Providers>{children}</Web3Providers>
+      </body>
+    </html>
+  );
+}
