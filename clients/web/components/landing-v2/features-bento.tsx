@@ -6,58 +6,58 @@ import { useRef, useState } from "react";
 
 const features = [
   {
-    title: "TEE-sealed LLM engine",
-    tag: "TEE inference",
+    title: "Tamper-proof reasoning",
+    tag: "Sealed",
     description:
-      "Planner + supervisor LLMs run inside a TEE-attested inference provider. Provider signs every response; hash folds into the on-chain reasoning record.",
+      "Every model decision runs in a sealed environment and is cryptographically signed — so you can prove the AI reasoned exactly as recorded.",
     icon: "/assets/landing/icons/fox-brain.svg",
     accent: "#6FCAA0",
-    pills: ["TEE inference", "Attested", "Sealed infer"],
+    pills: ["Sealed", "Signed", "Verifiable"],
   },
   {
-    title: "Multi-agent orchestration",
+    title: "One agent per symbol",
     tag: "Agents",
     description:
-      "One isolated process per symbol. Each with its own config, position, and LLM context.",
+      "Each market gets its own isolated agent with its own position, config, and context. They run in parallel and can't interfere.",
     icon: "/assets/landing/icons/paw-pack.svg",
     accent: "#F3E4D1",
-    pills: ["Per-symbol", "Isolated VM", "Parallel"],
+    pills: ["Per-symbol", "Isolated", "Parallel"],
   },
   {
     title: "30+ quant strategies",
-    tag: "Algorithms",
+    tag: "Strategies",
     description:
-      "Momentum, mean-rev, stat-arb, vol, smart-money, RWA — all proven on live markets.",
+      "Momentum, mean-rev, stat-arb, volatility, smart-money and more — battle-tested on live markets.",
     icon: "/assets/landing/icons/glacier-chart.svg",
     accent: "#8FB1E8",
     pills: ["Momentum", "Mean-rev", "Stat-arb"],
   },
   {
-    title: "Risk-first architecture",
+    title: "Risk-first by default",
     tag: "Safety",
     description:
-      "Per-agent drawdown caps and kill switches. Hub authority — no agent exceeds its mandate.",
+      "Per-agent drawdown caps and kill switches. A supervisor enforces limits — no agent exceeds its mandate.",
     icon: "/assets/landing/icons/ice-shield.svg",
     accent: "#B3C9EE",
-    pills: ["Kill switch", "Drawdown cap", "Hub auth"],
+    pills: ["Kill switch", "Drawdown cap", "Guardrails"],
   },
   {
-    title: "Verifiable on-chain audit",
-    tag: "Injective",
+    title: "Every move, receipted",
+    tag: "Proof",
     description:
-      "DecisionLogger + TradeLogger emit indexed events for every supervisor verdict and fill on Injective. Reasoning + trade JSON sealed on decentralized off-chain storage, bound by hash.",
+      "Each decision and fill is receipted and replayable. Audit why an agent did what — months later, line by line.",
     icon: "/assets/landing/icons/frozen-globe.svg",
     accent: "#6FCAA0",
-    pills: ["Injective", "Off-chain store", "TradeLogger"],
+    pills: ["Logged", "Replayable", "Yours"],
   },
   {
-    title: "Tradable strategy INFTs",
-    tag: "ERC-7857",
+    title: "Own & trade strategies",
+    tag: "Markets",
     description:
-      "Every published strategy mints an Agent ID (ERC-7857 INFT). Encrypted config, sealed-executor usage rights, re-encryption on transfer — buyers run it without ever seeing it.",
+      "Publish a strategy as an encrypted, tradable asset. Buyers run it without ever seeing the config.",
     icon: "/assets/landing/icons/aurora-pulse.svg",
     accent: "#F0C561",
-    pills: ["ERC-7857", "INFT", "Sealed config"],
+    pills: ["Encrypted", "Tradable", "Private"],
   },
 ];
 
@@ -75,7 +75,7 @@ export function FeaturesBento() {
     const el = gridRef.current;
     if (!el) return;
     el.style.gridTemplateColumns = col !== null ? COL_TPLS[col] : BASE_COLS;
-    el.style.gridTemplateRows    = row !== null ? ROW_TPLS[row] : BASE_ROWS;
+    el.style.gridTemplateRows = row !== null ? ROW_TPLS[row] : BASE_ROWS;
   }
 
   function enter(i: number) {
@@ -92,7 +92,7 @@ export function FeaturesBento() {
   }
 
   return (
-    <section className="px-6 md:px-12 py-24 md:py-36 max-w-7xl mx-auto">
+    <section className="mx-auto max-w-7xl px-6 py-24 md:px-12 md:py-36">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -100,11 +100,11 @@ export function FeaturesBento() {
         transition={{ duration: 0.5 }}
         className="mb-12"
       >
-        <p className="text-[10px] tracking-[2.5px] uppercase text-foreground/35 font-mono mb-3">
+        <p className="mb-3 font-mono text-[10px] uppercase tracking-[2.5px] text-foreground/35">
           Capabilities
         </p>
-        <h2 className="text-[clamp(36px,5vw,64px)] font-light tracking-tight text-foreground leading-[0.95]">
-          Everything your pack needs.
+        <h2 className="text-[clamp(36px,5vw,64px)] font-light leading-[0.95] tracking-tight text-foreground">
+          Everything your desk needs.
         </h2>
       </motion.div>
 
@@ -159,7 +159,6 @@ function BentoCell({
         transition: "border-color 0.3s ease",
       }}
     >
-      {/* accent bg */}
       <div
         style={{
           position: "absolute",
@@ -170,7 +169,6 @@ function BentoCell({
         }}
       />
 
-      {/* content */}
       <div
         style={{
           position: "relative",
@@ -182,8 +180,14 @@ function BentoCell({
           flexDirection: "column",
         }}
       >
-        {/* top row: tag + icon */}
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "10px" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            marginBottom: "10px",
+          }}
+        >
           <span
             style={{
               fontSize: "10px",
@@ -207,14 +211,14 @@ function BentoCell({
               height: isActive ? 44 : 34,
               position: "relative",
               flexShrink: 0,
-              transition: "width 0.55s cubic-bezier(0.4,0,0.2,1), height 0.55s cubic-bezier(0.4,0,0.2,1)",
+              transition:
+                "width 0.55s cubic-bezier(0.4,0,0.2,1), height 0.55s cubic-bezier(0.4,0,0.2,1)",
             }}
           >
             <Image src={f.icon} alt={f.title} fill className="object-contain" />
           </div>
         </div>
 
-        {/* title */}
         <p
           style={{
             fontSize: isActive ? "20px" : "15px",
@@ -229,7 +233,6 @@ function BentoCell({
           {f.title}
         </p>
 
-        {/* description */}
         <p
           style={{
             fontSize: "13px",
@@ -239,13 +242,13 @@ function BentoCell({
             opacity: isActive ? 1 : 0,
             maxHeight: isActive ? "120px" : "0px",
             overflow: "hidden",
-            transition: "opacity 0.35s ease 0.12s, max-height 0.5s cubic-bezier(0.4,0,0.2,1) 0.05s",
+            transition:
+              "opacity 0.35s ease 0.12s, max-height 0.5s cubic-bezier(0.4,0,0.2,1) 0.05s",
           }}
         >
           {f.description}
         </p>
 
-        {/* pills */}
         <div
           style={{
             display: "flex",
@@ -256,7 +259,8 @@ function BentoCell({
             opacity: isActive ? 1 : 0,
             maxHeight: isActive ? "60px" : "0px",
             overflow: "hidden",
-            transition: "opacity 0.3s ease 0.2s, max-height 0.5s cubic-bezier(0.4,0,0.2,1) 0.05s",
+            transition:
+              "opacity 0.3s ease 0.2s, max-height 0.5s cubic-bezier(0.4,0,0.2,1) 0.05s",
           }}
         >
           {f.pills.map((p) => (

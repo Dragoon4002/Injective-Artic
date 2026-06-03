@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Wallet, Copy, Check } from "lucide-react"
 import { useChainWallet } from "@/hooks/use-queries"
 import { Skeleton } from "./skeleton"
+import { NATIVE_SYMBOL } from "@/lib/chain-active"
 
 type ToneKey = "halted" | "red" | "amber" | "green"
 
@@ -36,7 +37,7 @@ export function CreditsWidget() {
   return (
     <div
       className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs ${t.bg} ${t.text}`}
-      title={data.address ? `${data.address} · ${balance.toFixed(4)} OG` : "no wallet"}
+      title={data.address ? `${data.address} · ${balance.toFixed(4)} ${NATIVE_SYMBOL}` : "no wallet"}
     >
       <Link
         href="/app/settings"
@@ -46,7 +47,7 @@ export function CreditsWidget() {
         <span className="num-tabular font-mono font-semibold">
           {balance.toFixed(3)}
         </span>
-        <span className="text-[10px] uppercase opacity-65">OG</span>
+        <span className="text-[10px] uppercase opacity-65">{NATIVE_SYMBOL}</span>
       </Link>
       <button
         onClick={copy}

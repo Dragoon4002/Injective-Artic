@@ -56,6 +56,7 @@ export const useDecisions = (agentId?: string) =>
     queryKey: qk.decisions(agentId ?? ""),
     queryFn: () => api.listDecisions(agentId ?? ""),
     staleTime: SHORT,
+    refetchInterval: SHORT,
     enabled: !!agentId,
   })
 
@@ -81,6 +82,7 @@ export const useLogs = (agentId: string) =>
     queryKey: qk.logs(agentId),
     queryFn: () => api.listLogs(agentId),
     staleTime: SHORT,
+    refetchInterval: SHORT,
     enabled: !!agentId,
   })
 

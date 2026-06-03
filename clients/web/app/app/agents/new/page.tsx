@@ -49,9 +49,8 @@ export default function NewAgentPage() {
       const backendBody = {
         name: payload.name,
         symbol: payload.symbol,
-        // TEE-sealed inference via 0G Compute Network — see app/llm/og_compute.py
-        llm_provider: "0g_compute",
-        llm_model: "0GM-1.0-35B-A3B",
+        llm_provider: "gemini",
+        llm_model: "gemini-2.5-flash",
         strategy_pool: [],
         risk_params: {
           amount_usdt: payload.amount_usdt,
@@ -257,12 +256,11 @@ export default function NewAgentPage() {
             </div>
           </Section>
 
-          <Section icon={<Sparkles size={15} />} title="LLM" hint="TEE-sealed inference via 0G Compute Network. No API key needed.">
+          <Section icon={<Sparkles size={15} />} title="LLM" hint="Gemini 2.5 Flash — fast, capable, no TEE key needed.">
             <div className="rounded-md border border-white/10 bg-white/[0.02] p-3 text-xs text-foreground/70">
-              <p className="font-semibold text-[var(--color-teal)]">0G Compute · 0GM-1.0-35B-A3B</p>
+              <p className="font-semibold text-[var(--color-teal)]">Gemini · gemini-2.5-flash</p>
               <p className="mt-1 text-foreground/50">
-                Every supervisor decision runs inside a TDX-attested TEE. The provider signature
-                is logged on-chain via DecisionLogger for verifiable inference.
+                Every supervisor decision is logged on-chain via DecisionLogger for verifiable inference.
               </p>
             </div>
           </Section>
@@ -350,7 +348,7 @@ function SummaryPanel({
           }
         />
         <Row k="Session cap" v={`${(form.max_session_loss_pct * 100).toFixed(0)}%`} />
-        <Row k="LLM" v="0g_compute · 0GM-1.0-35B-A3B (TEE)" />
+        <Row k="LLM" v="gemini · gemini-2.5-flash" />
         <Row k="Auto-start" v={form.auto_start ? "yes" : "no"} />
         <Row k="Mode" v={form.live_mode ? "LIVE" : "paper"} />
       </div>

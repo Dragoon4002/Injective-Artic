@@ -1,17 +1,32 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Days_One, Karma, Geist_Mono, Poppins, Inter } from "next/font/google";
 import { Web3Providers } from "@/components/providers/web3-providers";
 import { LoadingScreen } from "@/components/shared/loading-screen";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+// ── Site fonts ──────────────────────────────────────────────────────────
+// Swap the Google font on either line to restyle the whole site.
+//   headingFont → drives every h1–h6
+//   bodyFont    → drives all body / UI text
+// (Pick any next/font/google family; keep the `variable` name unchanged.)
+const headingFont = Poppins({
+  variable: "--font-heading",
   subsets: ["latin"],
+  weight: "400", // Days One ships a single weight
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const bodyFont = Inter({
+  variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const monoFont = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -62,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} dark antialiased`}
+      className={`${headingFont.variable} ${bodyFont.variable} ${monoFont.variable} dark antialiased`}
     >
       <body className="min-h-screen flex flex-col">
         <LoadingScreen />

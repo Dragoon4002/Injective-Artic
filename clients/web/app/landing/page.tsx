@@ -1,19 +1,21 @@
 "use client";
 
 import { Navbar } from "@/components/newlanding/navbar";
-import { HeroArctic } from "@/components/newlanding/hero-arctic";
-import { FeaturesBento } from "@/components/newlanding/features-bento";
 import { StrategyCatalog } from "@/components/newlanding/strategy-catalog";
-import { HowItWorksSection } from "@/components/newlanding/how-it-works-single";
-import { LlmMatrix } from "@/components/newlanding/llm-matrix";
-import { OnchainProof } from "@/components/newlanding/onchain-proof";
-import { LivePnlFeed } from "@/components/newlanding/live-pnl-feed";
-import { Faq } from "@/components/newlanding/faq";
 import { Waitlist } from "@/components/newlanding/waitlist";
-import { CtaBanner } from "@/components/newlanding/cta-banner";
-import { Footer } from "@/components/newlanding/footer";
 import { LandingSnapContainer } from "@/components/newlanding/landing-snap-container";
 import { LandingThemeProvider, useLandingTheme } from "@/components/newlanding/theme-context";
+
+import { Hero } from "@/components/landing-v2/hero";
+import { StatStrip } from "@/components/landing-v2/stat-strip";
+import { FeaturesBento } from "@/components/landing-v2/features-bento";
+import { HowItWorksSection } from "@/components/landing-v2/how-it-works";
+import { LlmMatrix } from "@/components/landing-v2/llm-matrix";
+import { OnchainProof } from "@/components/landing-v2/onchain-proof";
+import { LivePnlFeed } from "@/components/landing-v2/live-pnl-feed";
+import { Faq } from "@/components/landing-v2/faq";
+import { CtaBanner } from "@/components/landing-v2/cta-banner";
+import { Footer } from "@/components/landing-v2/footer";
 
 function LandingShell() {
   const ctx = useLandingTheme();
@@ -24,8 +26,9 @@ function LandingShell() {
       <div className="bg-background text-foreground">
         <Navbar />
         <LandingSnapContainer
-          top={[<HeroArctic key="hero" />]}
+          top={[<Hero key="hero" />]}
           middle={[
+            <StatStrip key="stats" />,
             <FeaturesBento key="bento" />,
             <StrategyCatalog key="strat" />,
             <HowItWorksSection key="hiw" />,

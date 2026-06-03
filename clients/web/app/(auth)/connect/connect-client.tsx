@@ -42,7 +42,7 @@ export function ConnectWalletClient() {
 
       <div className="rounded-md border border-white/10 bg-white/[0.02] p-3">
         <p className="text-[11px] font-semibold uppercase tracking-wide text-foreground/50">
-          EVM wallet (0G mainnet)
+          {process.env.NEXT_PUBLIC_ACTIVE_CHAIN === "injective" ? "EVM wallet (Injective inEVM)" : "EVM wallet (0G mainnet)"}
         </p>
         <code className="mt-1 block truncate font-mono text-xs text-foreground/80">
           {address ?? "not connected"}

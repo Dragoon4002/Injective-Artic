@@ -10,6 +10,7 @@ const active = process.env.NEXT_PUBLIC_ACTIVE_CHAIN === "injective" ? injective 
 export const CHAIN_ID = active.CHAIN_ID
 export const EVM_CHAIN_ID = active.EVM_CHAIN_ID
 export const AUTH_CHAIN_NAME = active.AUTH_CHAIN_NAME
+export const NATIVE_SYMBOL = active.NATIVE_SYMBOL
 export const RPC_URL = active.RPC_URL
 export const CONTRACTS = active.CONTRACTS
 export const explorerTxUrl = active.explorerTxUrl

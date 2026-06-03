@@ -49,12 +49,8 @@ export function WarningsProvider({ children }: PropsWithChildren) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    setVisible(read())
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEY) setVisible(read())
-    }
-    window.addEventListener("storage", onStorage)
-    return () => window.removeEventListener("storage", onStorage)
+    // Warnings permanently hidden — write false so any old "1" is overwritten.
+    write(false)
   }, [])
 
   const set = useCallback((v: boolean) => {

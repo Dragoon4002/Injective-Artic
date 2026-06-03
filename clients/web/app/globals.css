@@ -7,9 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-body);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-inter);
+  --font-heading: var(--font-heading);
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -336,6 +336,9 @@ input[type="range"]:focus-visible::-moz-range-thumb {
   html {
     @apply font-sans scroll-smooth;
     scrollbar-gutter: stable;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
   }
   option {
     background-color: #1F2731;

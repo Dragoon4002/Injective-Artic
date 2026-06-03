@@ -5,6 +5,7 @@ import { Copy, Send, ArrowDownToLine } from "lucide-react"
 import { parseEther } from "viem"
 import { useSendTransaction } from "wagmi"
 import { useChainWallet, useWithdrawChainWallet } from "@/hooks/use-queries"
+import { NATIVE_SYMBOL } from "@/lib/chain-active"
 
 export function ChainWalletCard() {
   const { data, isLoading, refetch } = useChainWallet()
@@ -72,7 +73,7 @@ export function ChainWalletCard() {
         </h3>
         {lowBalance && (
           <span className="rounded-full bg-[var(--color-red)]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-red-light)]">
-            Below {data.threshold_og} OG — agents cannot start
+            Below {data.threshold_og} {NATIVE_SYMBOL} — agents cannot start
           </span>
         )}
       </header>
@@ -90,14 +91,14 @@ export function ChainWalletCard() {
           } />
           <Kv label="Balance" value={
             <span className={lowBalance ? "text-[var(--color-red-light)]" : "text-[var(--color-teal)]"}>
-              {Number(data.balance_og).toFixed(4)} OG
+              {Number(data.balance_og).toFixed(4)} {NATIVE_SYMBOL}
             </span>
           } />
-          <Kv label="Min to start" value={`${data.threshold_og} OG`} />
+          <Kv label="Min to start" value={`${data.threshold_og} ${NATIVE_SYMBOL}`} />
         </div>
         <div className="space-y-2">
-          <Kv label="Burn rate" value={`${Number(data.burn_rate_og_per_day).toFixed(4)} OG/day`} />
-          <Kv label="Cost / tx" value={`${Number(data.cost_per_tx_og).toFixed(6)} OG`} />
+          <Kv label="Burn rate" value={`${Number(data.burn_rate_og_per_day).toFixed(4)} ${NATIVE_SYMBOL}/day`} />
+          <Kv label="Cost / tx" value={`${Number(data.cost_per_tx_og).toFixed(6)} ${NATIVE_SYMBOL}`} />
           <Kv label="Forecast runout" value={runoutLabel} />
         </div>
       </div>
@@ -111,7 +112,7 @@ export function ChainWalletCard() {
               value={topupAmount}
               onChange={(e) => setTopupAmount(e.target.value)}
               className="w-full rounded-md bg-white/[0.04] px-3 py-1.5 font-mono text-xs"
-              placeholder="OG amount"
+              placeholder={`${NATIVE_SYMBOL} amount`}
             />
             <button
               onClick={onTopup}
@@ -138,7 +139,7 @@ export function ChainWalletCard() {
                 type="number" step="0.1" min="0"
                 value={withdrawAmount}
                 onChange={(e) => setWithdrawAmount(e.target.value)}
-                placeholder="OG amount"
+                placeholder={`${NATIVE_SYMBOL} amount`}
                 className="w-full rounded-md bg-white/[0.04] px-3 py-1.5 font-mono text-xs"
               />
               <button

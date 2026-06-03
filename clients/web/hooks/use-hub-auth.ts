@@ -27,19 +27,19 @@ import {
   type StoredJwt,
 } from "@/lib/hub-auth"
 import { useWallet } from "@/hooks/use-wallet"
+import { EVM_CHAIN_ID, RPC_URL, AUTH_CHAIN_NAME } from "@/lib/chain-active"
 
 const HUB_URL =
   (process.env.NEXT_PUBLIC_HUB_URL as string | undefined) || "http://localhost:9000"
 const CHAIN =
-  (process.env.NEXT_PUBLIC_HUB_AUTH_EVM_CHAIN as string | undefined) || "0g-mainnet"
+  (process.env.NEXT_PUBLIC_HUB_AUTH_EVM_CHAIN as string | undefined) || AUTH_CHAIN_NAME
 const SESSION_SCOPE = "authenticated-actions"
 const SESSION_TTL_SECONDS = 8 * 60 * 60
 
 type Status = "idle" | "running" | "ok" | "error"
 
-const TARGET_CHAIN_ID = Number(
-  (process.env.NEXT_PUBLIC_ZERO_G_CHAIN_ID as string | undefined) || "16661",
-)
+const TARGET_CHAIN_ID = EVM_CHAIN_ID
+const _isInjective = process.env.NEXT_PUBLIC_ACTIVE_CHAIN === "injective"
 
 export function useHubAuth() {
   const { address: walletAddress, isConnected, openConnect } = useWallet()
@@ -114,13 +114,21 @@ export function useHubAuth() {
                 await eth.request({
                   method: "wallet_addEthereumChain",
                   params: [
-                    {
-                      chainId: targetHex,
-                      chainName: "0G Mainnet",
-                      nativeCurrency: { name: "0G", symbol: "0G", decimals: 18 },
-                      rpcUrls: ["https://evmrpc.0g.ai"],
-                      blockExplorerUrls: ["https://chainscan.0g.ai"],
-                    },
+                    _isInjective
+                      ? {
+                          chainId: targetHex,
+                          chainName: "Injective inEVM",
+                          nativeCurrency: { name: "INJ", symbol: "INJ", decimals: 18 },
+                          rpcUrls: [RPC_URL],
+                          blockExplorerUrls: ["https://testnet.blockscout.injective.network"],
+                        }
+                      : {
+                          chainId: targetHex,
+                          chainName: "0G Mainnet",
+                          nativeCurrency: { name: "0G", symbol: "0G", decimals: 18 },
+                          rpcUrls: ["https://evmrpc.0g.ai"],
+                          blockExplorerUrls: ["https://chainscan.0g.ai"],
+                        },
                   ],
                 })
               } else {
@@ -132,7 +140,7 @@ export function useHubAuth() {
         // Verify
         const newHex = (await eth.request({ method: "eth_chainId" })) as string
         if (parseInt(newHex, 16) !== TARGET_CHAIN_ID) {
-          throw new Error("wallet did not switch to 0G Mainnet — switch manually and retry")
+          throw new Error(`wallet did not switch to chain ${TARGET_CHAIN_ID} — switch manually and retry`)
         }
         console.log("[hub-auth] switched ok")
       }

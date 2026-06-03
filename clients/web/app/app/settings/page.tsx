@@ -1,12 +1,71 @@
 "use client"
 
-import { Copy, LogOut } from "lucide-react"
+import { Copy, LogOut, Check, Pencil } from "lucide-react"
 import { useState } from "react"
 import { PageHeader } from "@/components/dashboard/empty-state"
 import { ChainWalletCard } from "@/components/wallet/chain-wallet-card"
 import { useWallet } from "@/hooks/use-wallet"
 import { displayName, shortenAddr } from "@/lib/identity"
-import { CHAIN_ID, EVM_CHAIN_ID } from "@/lib/chain"
+import { CHAIN_ID, EVM_CHAIN_ID } from "@/lib/chain-active"
+import * as api from "@/lib/api"
+
+function ApiKeyField({ label, keyName }: { label: string; keyName: string }) {
+  const [value, setValue] = useState("")
+  const [saved, setSaved] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const save = async () => {
+    if (!value.trim()) return
+    setError(null)
+    try {
+      await api.setSecret(keyName, value.trim())
+      setSaved(true)
+      setEditing(false)
+    } catch (e) {
+      setError((e as Error).message)
+    }
+  }
+
+  const startEdit = () => {
+    setValue("")
+    setSaved(false)
+    setEditing(true)
+  }
+
+  return (
+    <div className="space-y-1.5">
+      <label className="text-[11px] text-foreground/50">{label}</label>
+      <div className="flex gap-2">
+        <input
+          type="password"
+          value={saved && !editing ? "••••••••••••••••" : value}
+          onChange={(e) => setValue(e.target.value)}
+          disabled={saved && !editing}
+          placeholder="AIza…"
+          className="w-full rounded-md bg-white/[0.04] px-3 py-1.5 font-mono text-xs text-foreground/80 placeholder:text-foreground/25 disabled:opacity-50 disabled:cursor-not-allowed"
+        />
+        {saved && !editing ? (
+          <button
+            onClick={startEdit}
+            className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-foreground/60 hover:text-foreground"
+          >
+            <Pencil size={11} /> Edit
+          </button>
+        ) : (
+          <button
+            onClick={save}
+            disabled={!value.trim()}
+            className="inline-flex items-center gap-1.5 rounded-md bg-[var(--color-teal)]/15 px-3 py-1.5 text-xs font-semibold text-[var(--color-teal)] hover:bg-[var(--color-teal)]/25 disabled:opacity-40"
+          >
+            <Check size={11} /> Save
+          </button>
+        )}
+      </div>
+      {error && <p className="text-[11px] text-[var(--color-red-light)]">{error}</p>}
+    </div>
+  )
+}
 
 export default function SettingsPage() {
   const { address, username, disconnect } = useWallet()
@@ -44,6 +103,15 @@ export default function SettingsPage() {
       </Section>
 
       <ChainWalletCard />
+
+      <Section title="LLM API Keys">
+        <p className="mb-4 text-xs text-foreground/50">
+          Stored encrypted. Injected into agents at runtime — never returned to client.
+        </p>
+        <div className="space-y-4">
+          <ApiKeyField label="Gemini API Key" keyName="GEMINI_API_KEY" />
+        </div>
+      </Section>
 
       <Section title="Session">
         <div className="flex items-center justify-between">

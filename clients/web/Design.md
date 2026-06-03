@@ -289,7 +289,7 @@ Centered page, dark background:
 - Title: "Connect your wallet"
 - Subtitle: explains auto-signing behavior
 - `ConnectWalletClient` component (EVM SIWE wallet UI via wagmi + injected wallet)
-- Footer note: "EIP-4361 SIWE · 0G Chain ID 16661"
+- Footer note: "EIP-4361 SIWE · Injective Chain ID 1439"
 
 ---
 

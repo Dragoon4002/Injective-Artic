@@ -7,6 +7,7 @@ export const EVM_CHAIN_ID = Number(
   (process.env.NEXT_PUBLIC_ZERO_G_CHAIN_ID as string | undefined) || "16661",
 )
 export const AUTH_CHAIN_NAME = "0g-mainnet"
+export const NATIVE_SYMBOL = "OG"
 
 const EXPLORER_BASE =
   (process.env.NEXT_PUBLIC_ZERO_G_EXPLORER_BASE as string | undefined) ||

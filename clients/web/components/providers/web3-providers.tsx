@@ -5,15 +5,20 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { WagmiProvider, createConfig, createStorage, http } from "wagmi"
 import { injected } from "wagmi/connectors"
 import { defineChain } from "viem"
-import { EVM_CHAIN_ID, RPC_URL } from "@/lib/chain"
+import { EVM_CHAIN_ID, RPC_URL } from "@/lib/chain-active"
 
-const zeroG = defineChain({
+const _isInjective = process.env.NEXT_PUBLIC_ACTIVE_CHAIN === "injective"
+const activeChain = defineChain({
   id: EVM_CHAIN_ID,
-  name: "0G Mainnet",
-  nativeCurrency: { name: "0G", symbol: "0G", decimals: 18 },
+  name: _isInjective ? "Injective inEVM" : "0G Mainnet",
+  nativeCurrency: _isInjective
+    ? { name: "INJ", symbol: "INJ", decimals: 18 }
+    : { name: "0G", symbol: "0G", decimals: 18 },
   rpcUrls: { default: { http: [RPC_URL] } },
   blockExplorers: {
-    default: { name: "0G Chainscan", url: "https://chainscan.0g.ai" },
+    default: _isInjective
+      ? { name: "Injective Blockscout", url: "https://testnet.blockscout.injective.network" }
+      : { name: "0G Chainscan", url: "https://chainscan.0g.ai" },
   },
 })
 
@@ -27,9 +32,9 @@ const memoryStorage = {
 }
 
 const wagmiConfig = createConfig({
-  chains: [zeroG],
+  chains: [activeChain],
   connectors: [injected()],
-  transports: { [zeroG.id]: http(RPC_URL) },
+  transports: { [activeChain.id]: http(RPC_URL) },
   storage: createStorage({ storage: memoryStorage }),
 })
 

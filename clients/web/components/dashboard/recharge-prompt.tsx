@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { AlertTriangle, X, Copy, Check, ArrowUpRight } from "lucide-react"
 import { useChainWallet } from "@/hooks/use-queries"
+import { NATIVE_SYMBOL } from "@/lib/chain-active"
 
 const LOW_GAS_THRESHOLD_OG = 0.5
 
@@ -73,15 +74,15 @@ export function RechargePrompt() {
             <p className="mt-2 text-xs leading-relaxed text-foreground/65">
               Wallet has{" "}
               <span className="font-mono font-semibold text-[var(--color-red-light)]">
-                {balance.toFixed(4)} OG
+                {balance.toFixed(4)} {NATIVE_SYMBOL}
               </span>
-              . Agents need on-chain gas to log trades + decisions. Send OG to
+              . Agents need on-chain gas to log trades + decisions. Send {NATIVE_SYMBOL} to
               the address below to keep them running.
             </p>
 
             <div className="mt-3 rounded-lg bg-white/[0.04] p-2.5">
               <div className="text-[10px] uppercase tracking-wide text-foreground/45">
-                Your 0G wallet
+                Your {NATIVE_SYMBOL} wallet
               </div>
               <div className="mt-1 flex items-center justify-between gap-2">
                 <span className="font-mono text-xs text-foreground/85">

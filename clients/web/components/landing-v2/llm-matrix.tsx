@@ -36,7 +36,7 @@ const DeepSeekGlyph = () => (
   </svg>
 );
 
-const TeeGlyph = () => (
+const SealedGlyph = () => (
   <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="20" cy="20" r="13" />
     <path d="M13 20 L20 27 L27 13" />
@@ -45,32 +45,37 @@ const TeeGlyph = () => (
 );
 
 const providers = [
-  { name: "TEE-attested inference", model: "TEE-sealed · default", Glyph: TeeGlyph },
+  { name: "Artic Sealed", model: "sealed · default", Glyph: SealedGlyph },
   { name: "OpenAI", model: "gpt-4o · o1 · o3", Glyph: OpenAIGlyph },
-  { name: "Anthropic", model: "claude 4.7 opus · sonnet", Glyph: AnthropicGlyph },
+  { name: "Anthropic", model: "claude opus · sonnet", Glyph: AnthropicGlyph },
   { name: "Google", model: "gemini 2.5 · flash", Glyph: GoogleGlyph },
   { name: "DeepSeek", model: "v3 · r1", Glyph: DeepSeekGlyph },
 ];
 
 export function LlmMatrix() {
   return (
-    <section className="relative px-6 md:px-12 py-24 md:py-32 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+    <section className="relative mx-auto max-w-7xl px-6 py-24 md:px-12 md:py-32">
+      <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-[10px] tracking-[2.5px] uppercase text-foreground/35 font-mono mb-3">
-            §06 — LLM providers
+          <p className="mb-3 font-mono text-[10px] uppercase tracking-[2.5px] text-foreground/35">
+            §06 — Models
           </p>
-          <h2 className="text-[clamp(28px,3.6vw,44px)] font-light tracking-tight text-foreground leading-none max-w-[22ch]">
-            Bring your own key.<br />
-            <em className="not-italic font-serif text-foreground/70">Swap models any time.</em>
+          <h2 className="max-w-[22ch] text-[clamp(28px,3.6vw,44px)] font-light leading-none tracking-tight text-foreground">
+            Bring your own key.
+            <br />
+            <em className="font-serif not-italic text-foreground/70">
+              Swap models any time.
+            </em>
           </h2>
         </div>
-        <p className="text-[12px] text-foreground/50 max-w-sm leading-relaxed">
-          Default routes through a TEE-attested inference provider — sealed inference with provider signature. Or bring your own key; supervisor + planner can be different models.
+        <p className="max-w-sm text-[12px] leading-relaxed text-foreground/50">
+          Default runs through Artic&apos;s sealed inference — signed and
+          verifiable. Or bring your own key; planner and supervisor can be
+          different models.
         </p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-5 border-t border-l border-foreground/10">
+      <div className="grid grid-cols-2 border-l border-t border-foreground/10 lg:grid-cols-5">
         {providers.map(({ name, model, Glyph }, i) => (
           <motion.div
             key={name}
@@ -78,16 +83,16 @@ export function LlmMatrix() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
-            className="relative px-6 md:px-10 py-10 md:py-14 border-r border-b border-foreground/10 group hover:bg-foreground/2 transition-colors"
+            className="group relative border-b border-r border-foreground/10 px-6 py-10 transition-colors hover:bg-foreground/2 md:px-10 md:py-14"
           >
-            <span className="absolute top-3 right-4 text-[10px] font-mono text-foreground/20 tabular-nums">
+            <span className="absolute right-4 top-3 font-mono text-[10px] tabular-nums text-foreground/20">
               {String(i + 1).padStart(2, "0")}
             </span>
-            <div className="text-foreground/25 mb-6 group-hover:text-foreground/55 transition-colors">
+            <div className="mb-6 text-foreground/25 transition-colors group-hover:text-foreground/55">
               <Glyph />
             </div>
-            <p className="text-[16px] tracking-tight text-foreground mb-1">{name}</p>
-            <p className="text-[11px] font-mono text-foreground/40 tracking-wide">{model}</p>
+            <p className="mb-1 text-[16px] tracking-tight text-foreground">{name}</p>
+            <p className="font-mono text-[11px] tracking-wide text-foreground/40">{model}</p>
           </motion.div>
         ))}
       </div>

@@ -26,11 +26,11 @@ const items = [
   },
   {
     q: "Why an audit chain at all?",
-    a: "Reproducibility. Every supervisor verdict, strategy switch, and trade fill emits a signed event to 0G Chain (DecisionLogger + TradeLogger). Full LLM reasoning + trade detail JSON sealed on 0G Storage and bound by hash — replay why an agent did what, three months later.",
+    a: "Reproducibility. Every supervisor verdict, strategy switch, and trade fill emits a signed event to Injective (DecisionLogger + TradeLogger). Full LLM reasoning + trade detail JSON sealed on decentralized off-chain storage and bound by hash — replay why an agent did what, three months later.",
   },
   {
-    q: "What 0G modules does Artic use?",
-    a: "Four. 0G Chain for DecisionLogger / TradeLogger / StrategyINFT events; 0G Compute (TeeML) for sealed LLM inference with provider attestation; 0G Storage for full reasoning + trade JSON; and ERC-7857 INFTs for tradable, encrypted strategy configs.",
+    q: "What on-chain infrastructure does Artic use?",
+    a: "Injective inEVM for DecisionLogger / TradeLogger / StrategyINFT events; a TEE-attested inference provider for sealed LLM inference with provider attestation; decentralized off-chain storage for full reasoning + trade JSON; and ERC-7857 INFTs for tradable, encrypted strategy configs.",
   },
 ];
 

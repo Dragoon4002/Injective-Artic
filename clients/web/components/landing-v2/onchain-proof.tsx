@@ -39,7 +39,11 @@ export function OnchainProof() {
         return [
           {
             ...head,
-            hash: "0x" + Math.random().toString(16).slice(2, 14) + "…" + Math.random().toString(16).slice(2, 6),
+            hash:
+              "0x" +
+              Math.random().toString(16).slice(2, 14) +
+              "…" +
+              Math.random().toString(16).slice(2, 6),
             block: head.block + 1 + Math.floor(Math.random() * 4),
             age: "0s",
           },
@@ -51,69 +55,74 @@ export function OnchainProof() {
   }, []);
 
   return (
-    <section className="relative px-6 md:px-12 py-28 md:py-36 max-w-7xl mx-auto">
-      {/* faint chain-link background accent */}
+    <section className="relative mx-auto max-w-7xl px-6 py-28 md:px-12 md:py-36">
       <div
         aria-hidden
-        className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 opacity-[0.025]"
+        className="pointer-events-none absolute right-0 top-1/2 h-64 w-64 -translate-y-1/2 opacity-[0.025]"
         style={{
           backgroundImage: "radial-gradient(circle, #8FB1E8 1px, transparent 1px)",
           backgroundSize: "24px 24px",
         }}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20 items-start">
+      <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
         <div>
-          <p className="text-[10px] tracking-[2.5px] uppercase text-foreground/35 font-mono mb-4">
-            §07 — On-chain proof
+          <p className="mb-4 font-mono text-[10px] uppercase tracking-[2.5px] text-foreground/35">
+            §07 — Proof
           </p>
-          <h2 className="text-[clamp(36px,4.6vw,60px)] font-light tracking-tight text-foreground leading-[0.95] mb-6">
-            Every decision.<br />
-            <em className="not-italic font-serif text-foreground/80">Cryptographically receipted.</em>
+          <h2 className="mb-6 text-[clamp(36px,4.6vw,60px)] font-light leading-[0.95] tracking-tight text-foreground">
+            Every decision.
+            <br />
+            <em className="font-serif not-italic text-foreground/80">
+              Cryptographically receipted.
+            </em>
           </h2>
-          <p className="text-[14px] text-foreground/55 leading-relaxed max-w-md mb-8">
-            Supervisor verdicts, strategy switches, and trade fills emit signed events to <strong className="text-foreground/80 font-normal">Injective</strong>. Full LLM reasoning + trade JSON sealed on <strong className="text-foreground/80 font-normal">decentralized off-chain storage</strong>; only the root hash lands on-chain. Replay any decision, three months later.
+          <p className="mb-8 max-w-md text-[14px] leading-relaxed text-foreground/55">
+            Supervisor verdicts, strategy switches, and trade fills are signed
+            and receipted. Full reasoning and trade detail are{" "}
+            <strong className="font-normal text-foreground/80">
+              sealed and bound by hash
+            </strong>{" "}
+            — only the fingerprint is published. Replay any decision, three
+            months later.
           </p>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {["DecisionLogger", "TradeLogger", "StrategyINFT"].map((c) => (
+          <div className="mb-8 flex flex-wrap gap-2">
+            {["Decisions", "Trades", "Strategies"].map((c) => (
               <span
                 key={c}
-                className="text-[11px] font-mono px-3 py-1.5 rounded-full border border-foreground/15 text-foreground/70"
+                className="rounded-full border border-foreground/15 px-3 py-1.5 font-mono text-[11px] text-foreground/70"
               >
-                {c}.sol
+                {c}
               </span>
             ))}
           </div>
-          {/* block counter */}
           <div className="flex items-center gap-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-accent animate-pulse shrink-0" />
-            <span className="font-mono text-[11px] text-foreground/35 tabular-nums">
-              block #{entries[0].block.toLocaleString()} · Injective inEVM testnet (chainId 1439)
+            <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-blue-accent" />
+            <span className="font-mono text-[11px] tabular-nums text-foreground/35">
+              receipt #{entries[0].block.toLocaleString()} · live audit stream
             </span>
           </div>
         </div>
 
-        <div className="relative rounded-2xl border border-foreground/10 bg-foreground/1.5 overflow-hidden">
-          {/* top bar — blue accent to distinguish from LivePnlFeed */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-foreground/10 bg-blue-accent/5">
+        <div className="relative overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/1.5">
+          <div className="flex items-center justify-between border-b border-foreground/10 bg-blue-accent/5 px-4 py-3">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-accent animate-pulse" />
-              <span className="text-[11px] font-mono uppercase tracking-wider text-blue-accent/70">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-blue-accent" />
+              <span className="font-mono text-[11px] uppercase tracking-wider text-blue-accent/70">
                 audit-stream · live
               </span>
             </div>
-            <span className="text-[11px] font-mono text-foreground/30">
+            <span className="font-mono text-[11px] text-foreground/30">
               #{entries[0].block}
             </span>
           </div>
 
-          {/* column header */}
-          <div className="px-4 py-2 border-b border-foreground/5 flex items-center gap-4 font-mono text-[10px] text-foreground/20 uppercase tracking-wider">
+          <div className="flex items-center gap-4 border-b border-foreground/5 px-4 py-2 font-mono text-[10px] uppercase tracking-wider text-foreground/20">
             <span className="w-20 shrink-0">type</span>
             <span className="w-24 shrink-0">symbol</span>
             <span className="flex-1">detail</span>
-            <span className="hidden md:inline w-32">tx hash</span>
-            <span className="w-10 text-right shrink-0">age</span>
+            <span className="hidden w-32 md:inline">receipt</span>
+            <span className="w-10 shrink-0 text-right">age</span>
           </div>
 
           <div className="divide-y divide-white/5">
@@ -123,18 +132,18 @@ export function OnchainProof() {
                 initial={{ opacity: 0, y: -8, backgroundColor: "rgba(143,177,232,0.06)" }}
                 animate={{ opacity: 1, y: 0, backgroundColor: "rgba(143,177,232,0)" }}
                 transition={{ duration: 0.3 }}
-                className="px-4 py-3 flex items-center gap-4 font-mono text-[12px] hover:bg-foreground/2"
+                className="flex items-center gap-4 px-4 py-3 font-mono text-[12px] hover:bg-foreground/2"
               >
                 <span
-                  className="text-[10px] tracking-[1.5px] uppercase w-20 shrink-0"
+                  className="w-20 shrink-0 text-[10px] uppercase tracking-[1.5px]"
                   style={{ color: kindColor[e.kind] }}
                 >
                   {e.kind}
                 </span>
-                <span className="text-foreground/50 w-24 shrink-0">{e.symbol}</span>
-                <span className="text-foreground/75 flex-1 truncate">{e.detail}</span>
-                <span className="text-foreground/25 hidden md:inline w-32 truncate">{e.hash}</span>
-                <span className="text-foreground/35 w-10 text-right shrink-0">{e.age}</span>
+                <span className="w-24 shrink-0 text-foreground/50">{e.symbol}</span>
+                <span className="flex-1 truncate text-foreground/75">{e.detail}</span>
+                <span className="hidden w-32 truncate text-foreground/25 md:inline">{e.hash}</span>
+                <span className="w-10 shrink-0 text-right text-foreground/35">{e.age}</span>
               </motion.div>
             ))}
           </div>

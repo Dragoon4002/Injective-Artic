@@ -37,7 +37,7 @@ export function HeroArctic() {
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-foreground/15 bg-foreground/5 backdrop-blur-sm text-xs text-foreground/80 mb-7">
             <div className="w-1.5 h-1.5 rounded-full bg-teal-light animate-pulse" />
-            Built on 0G · TEE-sealed inference · early access
+            Built on Injective · TEE-sealed inference · early access
           </div>
 
           <h1 className="text-[clamp(40px,7vw,80px)] font-bold tracking-[-2px] leading-[1.05] text-foreground mb-6">
@@ -48,8 +48,8 @@ export function HeroArctic() {
 
           <p className="text-xl text-foreground/70 max-w-xl leading-relaxed mb-10">
             Artic spawns isolated agents per symbol on dedicated VMs, lets a
-            TEE-sealed LLM (0G Compute) pick from 30+ quant strategies, and
-            logs every decision + trade to 0G Chain with reasoning on 0G Storage.
+            TEE-sealed LLM pick from 30+ quant strategies, and
+            logs every decision + trade to Injective with reasoning on decentralized off-chain storage.
           </p>
 
           <div className="flex gap-3 items-center flex-wrap">
