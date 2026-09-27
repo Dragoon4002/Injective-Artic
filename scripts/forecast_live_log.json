@@ -1,1 +1,26 @@
-{"predictions": []}
+{
+  "predictions": [
+    {
+      "symbol": "BTCUSDT",
+      "model": "own",
+      "made_ms": 1790476594308,
+      "made_at": "2026-09-27T02:36:34+00:00",
+      "target_ms": 1790476894308,
+      "base_price": 84508.68,
+      "pred_price": 84510.49949694319,
+      "pred_dir": "up",
+      "status": "pending"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "model": "cross",
+      "made_ms": 1790476595874,
+      "made_at": "2026-09-27T02:36:35+00:00",
+      "target_ms": 1790476895874,
+      "base_price": 121.5,
+      "pred_price": 121.48524704874002,
+      "pred_dir": "down",
+      "status": "pending"
+    }
+  ]
+}
